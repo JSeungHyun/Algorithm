@@ -18,4 +18,4 @@ def solution(m, n, puddles):
         for x in range(1,m):
             if graph[y][x] != 0:
                 graph[y][x] = (graph[y-1][x] + graph[y][x-1]) % 1000000007
-    return graph[n-1][m-1] % 1000000007
+    return graph[n-1][m-1]
