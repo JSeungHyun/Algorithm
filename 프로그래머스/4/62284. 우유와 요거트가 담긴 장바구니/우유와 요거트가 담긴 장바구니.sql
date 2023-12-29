@@ -1,0 +1,12 @@
+-- 코드를 입력하세요
+WITH cte AS (
+    SELECT CART_ID
+          ,GROUP_CONCAT(NAME SEPARATOR ',') AS NAME
+    FROM CART_PRODUCTS
+    GROUP BY CART_ID
+)
+
+SELECT CART_ID
+FROM cte 
+WHERE NAME LIKE '%Milk%'
+  AND NAME LIKE '%Yogurt%'
