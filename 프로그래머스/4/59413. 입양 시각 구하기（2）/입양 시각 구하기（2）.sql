@@ -1,0 +1,15 @@
+-- 코드를 입력하세요
+WITH RECURSIVE cte AS (
+    SELECT 0 AS HOUR
+    UNION ALL
+    SELECT HOUR+1 AS HOUR
+    FROM cte
+    WHERE HOUR < 23
+)
+
+SELECT HOUR
+      ,COUNT(ANIMAL_ID)
+FROM cte
+LEFT JOIN ANIMAL_OUTS a
+       ON cte.HOUR = HOUR(a.DATETIME)
+GROUP BY HOUR       
