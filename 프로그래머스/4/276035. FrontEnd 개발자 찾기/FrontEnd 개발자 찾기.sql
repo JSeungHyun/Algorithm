@@ -1,0 +1,14 @@
+-- 코드를 작성해주세요
+ SELECT ID
+      , EMAIL
+      , FIRST_NAME
+      ,	LAST_NAME
+ FROM DEVELOPERS d
+ WHERE EXISTS (
+    SELECT CODE
+    FROM SKILLCODES s
+    WHERE CATEGORY = 'Front End'
+     AND d.SKILL_CODE & s.CODE > 0
+ )
+ ORDER BY 1
+ 
