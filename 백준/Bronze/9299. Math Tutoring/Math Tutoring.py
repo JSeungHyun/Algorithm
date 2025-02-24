@@ -1,17 +1,13 @@
 import sys
 input = sys.stdin.readline
 
-for i in range(int(input())):
-    data = input().split()
-    highest = int(data[0])
-    items = list(map(int, data[1:]))
-    result = []
+T = int(input())
+for case in range(1, T + 1):
+    data = list(map(int, input().split()))
+    n = data[0]
 
-    for j in range(len(items)):
-        item = items[j]
-        v = (highest - j) * item
-        result.append(v)
+    items = data[1:]
+    result = [(n - i) * coeff for i, coeff in enumerate(items[:-1])]
 
-    print(f'Case {i+1}: {highest - 1}', end=' ')
-    print(*result[:-1])            
-
+    print(f"Case {case}: {n - 1}", end=" ")
+    print(*result)
