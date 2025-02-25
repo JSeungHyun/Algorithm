@@ -3,13 +3,13 @@ import sys
 input = sys.stdin.readline
 
 for i in range(1, int(input()) + 1):
-    alphabet_dict = dict.fromkeys(string.ascii_lowercase, 0)
+    alphabet_count = [0] * 26
     sentence = input().rstrip()
     for s in sentence:
         if s.isalpha():
-            alphabet_dict[s.lower()] += 1
+            alphabet_count[ord(s.lower()) - ord('a')] += 1
 
-    minValue = min(alphabet_dict.values())    
+    minValue = min(alphabet_count)
     print(f"Case {i}:", end=' ')
     if minValue == 0:
         print("Not a pangram")
