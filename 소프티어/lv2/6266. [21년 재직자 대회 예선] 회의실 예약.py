@@ -12,7 +12,7 @@ for _ in range(m):
     room, s, e = input().split()
     s = int(s) - 9
     e = int(e) - 9
-    rooms[room][s:e] = [1] * (e - s) # 예약된 시간은 1로 변경
+    rooms[room][s:e] = [1] * (e - s) # 예약된 시간은 1로 변경 
 
 keys = sorted(rooms.keys())
 for i in range(n):
@@ -32,7 +32,6 @@ for i in range(n):
                 available.append(start)
                 start = None
         
-
     if start != None:
         available.append(start + '-18')
 
