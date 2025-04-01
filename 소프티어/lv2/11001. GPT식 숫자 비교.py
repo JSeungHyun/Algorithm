@@ -5,7 +5,6 @@ items = []
 
 for _ in range(int(input())):
     s = input().rstrip()
-    
     if '.' in s:
         items.append(list(map(int, s.split('.'))))
     else:
