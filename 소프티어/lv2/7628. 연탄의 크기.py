@@ -19,3 +19,5 @@ for house in houses:
     result += Counter(getDivisor(house))
 
 print(result.most_common(2)[1][1])
+
+
