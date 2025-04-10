@@ -70,4 +70,4 @@ for p in product(['w', 's', 'l'], repeat=6):
     if 0 in top_2_keys:
         result += win_probability
 
-print(result)
+print("{:.3f}".format(result / 6))
