@@ -2,39 +2,29 @@ import sys
 input = sys.stdin.readline
 
 N = int(input())
-total_score = [0] * N
+total_scores = [0] * N
 
-for _ in range(N):
-    items = list(map(int, input().split()))
-    ranks_dict = {}
-    for i, v in enumerate(items):
-        total_score[i] += v
-        if v in ranks_dict:
-            ranks_dict[v].append(i)
-        else:
-            ranks_dict[v] = [i]
+def calculate_ranks(scores):
+    score_groups = {}
+    for idx, score in enumerate(scores):
+        if score not in score_groups:
+            score_groups[score] = []
+        score_groups[score].append(idx)
     
-    rank = 1
-    ranks_list = [0] * N
-    for key in sorted(ranks_dict.keys(), reverse=True):
-        ranks = ranks_dict[key]
-        for r in ranks:
-            ranks_list[r] = rank
-        rank += len(ranks)
-    print(' '.join(map(str, ranks_list)))
+    current_rank = 1
+    ranks = [0] * N
+    for score in sorted(score_groups.keys(), reverse=True):
+        groups = score_groups[score]
+        for idx in groups:
+            ranks[idx] = current_rank
+        current_rank += len(groups)
+    return ranks
 
-ranks_dict = {}
-for i, v in enumerate(total_score):
-    if v in ranks_dict:
-        ranks_dict[v].append(i)
-    else:
-        ranks_dict[v] = [i]
+for _ in range(3):
+    round_scores = list(map(int, input().split()))
+    for i in range(N):
+        total_scores[i] += round_scores[i]
+    print(' '.join(map(str, calculate_ranks(round_scores))))
 
-rank = 1
-ranks_list = [0] * N
-for key in sorted(ranks_dict.keys(), reverse=True):
-    ranks = ranks_dict[key]
-    for r in ranks:
-        ranks_list[r] = rank
-    rank += len(ranks)
-print(' '.join(map(str, ranks_list)))
+final_ranks = calculate_ranks(total_scores)
+print(' '.join(map(str, final_ranks)))
