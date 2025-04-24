@@ -1,36 +1,32 @@
 import sys
 input = sys.stdin.readline
+sys.setrecursionlimit(10**6)
 
 N, M = map(int, input().split())
-moneys = [int(input().rstrip()) for _ in range(N)]
-result = sys.maxsize
+graph = [list(input().rstrip()) for _ in range(N)]
+dp = [[0] * M for _ in range(N)]
 
-def isValidMoney(money):
-    if money < max(moneys):
-        return False
+dy = [-1, 1, 0, 0]
+dx = [0, 0, -1, 1]
 
-    cnt = 1
-    current_money = money
+def solution(y, x):    
+    value = int(graph[y][x])
+    for i in range(4):
+        ny = y + (dy[i] * value)
+        nx = x + (dx[i] * value)
 
-    for m in moneys:
-        if current_money < m: # 금액이 작으면 인출
-            cnt += 1
-            current_money = money
+        if (ny < 0 or nx < 0 or ny >= N or nx >= M) or graph[ny][nx] == 'H':
+            continue
 
-            if cnt > M: # 인출 횟수가 커지면 유효하지 않음
-                return False
-            
-        current_money -= m
-    return True
+        if dp[ny][nx] != 0: # 이미 방문했던곳, 사이클 생성
+            raise Exception
+        
+        dp[ny][nx] = dp[y][x] + 1
+        solution(ny, nx)
 
-left = max(moneys)
-right = sum(moneys)
-while left <= right:
-    mid = (left + right) // 2
-    if isValidMoney(mid):
-        result = mid
-        right = mid - 1
-    else:
-        left = mid + 1
-
-print(result)
+try:
+    dp[0][0] = 1
+    solution(0, 0)
+    print(max(max(dp)))
+except:
+    print(-1)
