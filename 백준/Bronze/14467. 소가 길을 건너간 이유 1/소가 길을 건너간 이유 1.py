@@ -1,6 +1,5 @@
 import sys
 input = sys.stdin.readline
-from collections import Counter
 
 N = int(input())
 cows = {}
