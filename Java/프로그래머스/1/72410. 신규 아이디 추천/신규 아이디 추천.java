@@ -4,35 +4,26 @@ class Solution {
         new_id = new_id.toLowerCase();
         
         // 2단계
-        StringBuilder sb = new StringBuilder();
-        for (char c : new_id.toCharArray()) {
-            if (Character.isDigit(c) || Character.isAlphabetic(c) || 
-                c == '-' || c == '_' || c == '.') {
-                sb.append(c);
-            }
-        }
-        new_id = sb.toString();
+        new_id = new_id.replaceAll("[^a-z0-9-_.]", "");
         
         // 3단계
-        while (new_id.contains("..")) {
-            new_id = new_id.replace("..", ".");
-        }
+        new_id = new_id.replaceAll("\\.{2,}", ".");
         
         // 4단계
-        sb = new StringBuilder(new_id);
-        if (sb.length() > 0 && sb.charAt(0) == '.') 
-            sb.deleteCharAt(0);
-        if (sb.length() > 0 && sb.charAt(sb.length() - 1) == '.') 
-            sb.deleteCharAt(sb.length() - 1);
+        new_id = new_id.replaceAll("^\\.|\\.$", "");
         
         // 5단계
-        if (sb.length() == 0) sb.append("a");
+        if (new_id.isEmpty()) {
+            new_id = "a";
+        }
         
         // 6단계
-        if (sb.length() > 15) sb.setLength(15);
-        if (sb.charAt(sb.length() - 1) == '.') sb.deleteCharAt(sb.length() - 1);
+        if (new_id.length() >= 16) {
+            new_id = new_id.substring(0, 15).replaceAll("[.]$", "");
+        }
         
         // 7단계
+        StringBuilder sb = new StringBuilder(new_id);
         while (sb.length() <= 2) sb.append(sb.charAt(sb.length() - 1));
         
         return sb.toString();
