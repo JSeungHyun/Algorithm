@@ -4,28 +4,23 @@ class Solution {
     public int solution(int[][] board, int[] moves) {
         int answer = 0;
         int n = board.length;
-        int k;
-        boolean flag;
         Deque<Integer> dq = new ArrayDeque<>();
         
         for (int move : moves) {
-            int idx = 0;
-            while (idx < n) {
-                if (board[idx][move - 1] != 0) { // 인형 있으면 진입
-                    flag = true;
-                    k = board[idx][move - 1];
-                    if (!dq.isEmpty()) {
-                        if (dq.peekLast() == k) { // 같은 인형일경우
-                            dq.pollLast();
-                            answer += 2;
-                            flag = false;
-                        }
+            int col = move - 1;
+            for (int row = 0; row < n; row++) {
+                if (board[row][col] != 0) {
+                    int doll = board[row][col];
+                    board[row][col] = 0;
+                    
+                    if (!dq.isEmpty() && dq.peekLast() == doll) {
+                        dq.pollLast();
+                        answer += 2;
+                    } else {
+                        dq.addLast(doll);
                     }
-                    board[idx][move - 1] = 0;
-                    if (flag) dq.addLast(k); 
-                    break; // 인형있으면 다음 MOVE
+                    break;
                 }
-                idx++; // 인형없으면 탐색
             }
         }
         
