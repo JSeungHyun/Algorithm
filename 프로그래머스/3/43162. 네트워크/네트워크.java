@@ -15,7 +15,7 @@ class Solution {
             while (!dq.isEmpty()) {
                 int idx = dq.pollFirst();
                 for (int j=0; j<n; j++) {
-                    if (i == j) continue;
+                    if (idx == j) continue;
                     if (!visited[j] && computers[idx][j] == 1) {
                         visited[j] = true;
                         dq.addLast(j);
