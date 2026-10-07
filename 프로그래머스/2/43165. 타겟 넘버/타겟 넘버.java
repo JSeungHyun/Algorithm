@@ -1,19 +1,14 @@
-import java.util.*;
-
 class Solution {
-    static int answer = 0;
     public int solution(int[] numbers, int target) {
-        dfs(0, 0, target, numbers);
-        return answer;
+        return dfs(0, 0, target, numbers);
     }
     
-    public int dfs(int depth, int v, int target, int[] numbers) {
+    private int dfs(int depth, int sum, int target, int[] numbers) {
         if (depth == numbers.length) {
-            if (v == target) answer++;
-            return 0;
+            return sum == target ? 1 : 0;
         }
-        dfs(depth + 1, v + numbers[depth], target, numbers);
-        dfs(depth + 1, v - numbers[depth], target, numbers);
-        return 0;
+        
+        return dfs(depth + 1, sum + numbers[depth], target, numbers)
+             + dfs(depth + 1, sum - numbers[depth], target, numbers);
     }
 }
