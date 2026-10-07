@@ -1,44 +1,45 @@
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 class Solution {
     public int solution(int[][] maps) {
-        int answer = Integer.MAX_VALUE;
         int h = maps.length;
         int w = maps[0].length;
-        boolean[][] visitied = new boolean[h][w];
-        int[] dy = new int[]{-1, 1, 0, 0};
-        int[] dx = new int[]{0, 0, -1, 1};
+        
+        boolean[][] visited = new boolean[h][w];
+        int[] dy = {-1, 1, 0, 0};
+        int[] dx = {0, 0, -1, 1};
+        
         Deque<Node> dq = new ArrayDeque<>();
-        dq.add(new Node(0, 0, 1));
-        visitied[0][0] = true;
+        dq.addLast(new Node(0, 0, 1));
+        visited[0][0] = true;
         
         while (!dq.isEmpty()) {
             Node node = dq.pollFirst();
+            
             if (node.y == h - 1 && node.x == w - 1) {
-                answer = Math.min(answer, node.v);
-                continue;
+                return node.v;
             }
             
-            for (int i=0; i<4; i++) {
+            for (int i = 0; i < 4; i++) {
                 int ny = node.y + dy[i];
                 int nx = node.x + dx[i];
                 
                 if (ny < 0 || ny >= h || nx < 0 || nx >= w) continue;
-                if (maps[ny][nx] != 1 || visitied[ny][nx]) continue;
-                if (!(ny == h - 1 && nx == w - 1)) visitied[ny][nx] = true;
+                if (maps[ny][nx] != 1 || visited[ny][nx]) continue;
+                
+                visited[ny][nx] = true;
                 dq.addLast(new Node(ny, nx, node.v + 1));
             }
         }
         
-        return answer == Integer.MAX_VALUE ? -1 : answer;
+        return -1;
     }
     
-    public class Node {
-        int y;
-        int x;
-        int v;
+    static class Node {
+        int y, x, v;
         
-        public Node(int y, int x, int v) {
+        Node(int y, int x, int v) {
             this.y = y;
             this.x = x;
             this.v = v;
